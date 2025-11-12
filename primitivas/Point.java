@@ -9,7 +9,7 @@ public class Point { //Modifica o necesario para que se dibuje un punto
     //(4)variables forman parte de cualquier primitva------------
     private final FloatBuffer vertexBuffer; //buffer de decimales, permite almacenar coordenadas de los vertices -Almacena coordenadas de manera que OpenGL los interprete
 
-    private final int mProgram; //rerpresenta el programa del OpenGL con los Shaders - Identificador de OpenGL y los shaders - rerpresenta el programa del OpenGL con los Shaders
+    private final int mProgram; //rerpresenta el programa del OpenGL con los Shaders - Identificador de OpenGL y los shaders - rerpresenta el programa del OpenGL con los Shaders - - identificador del programa
 
     private int positionHandle, colorHandle; //identifica variable posiciones, variable colores - Almacena los identificadores de las posiciones y colores
 
@@ -51,8 +51,68 @@ public class Point { //Modifica o necesario para que se dibuje un punto
         vertexBuffer.put(pointCoord); //copia coordenadas del vertice superior al GPU, Copiando las coordenas declaradas y que seran eviadas al GPU
         vertexBuffer.position(0);//situar el cursor al inicio del buffer, empieza desde el inicio, Situar el cursor en el inicio para que OpenGL lo lea desde el principio
 
+
+         //cargar shaders - iniciar primitvas
+        int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode); //recibe el tipo de shader y el codigo del shader
+        int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);//carga el fragment
+
+        //crea el programa OpenGL en la gpu
+        mProgram = GLES20.glCreateProgram(); // programa dentro del OPENGL es un contenedor y une el vertex con el fragment
+        GLES20.glAttachShader(mProgram, vertexShader); // añade los shaders al programa
+        GLES20.glAttachShader(mProgram, fragmentShader);//carga los shaders
+
+        //permite ensamblar el programa, revisa que los shaders sean compatibles
+        GLES20.glLinkProgram(mProgram);
+        
+    }
+
+    //permite dibujar los vertices usando el programa de shaders - es la parte final del ciclo de renderizado
+    public void draw(){
+
+        //pasos necesarios dibujar primitiva
+        GLES20.glUseProgram(mProgram);//1-activar el programa
+        positionHnadle = GLES20.glGetAttribLocation(mProgram, "vPosition");//2-obtener la posicion - vienen desde el vertex shader
+        GLES20.glEnableVertexAttribArray(positionHnadle);//3-activar el arreglo/array de vertices
+        GLES20.glVertexAttribPointer(//4-especficiar como lee los datos del buffer
+                    positionHnadle,
+                COORDS_POR_VERTEX,
+                GLES20.GL_FLOAT, //tipo de datos
+                false, //se normalizan los datos?
+                vertexStride, //numero de bytes por vertice
+                vertexBuffer//buffer por donde vienen los datos
+        );
+        colorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");//5-poner el color
+        GLES20.glUniform4fv(colorHandle, 1, color, 0);//ientificar el color desde el fragment shader
+
+        GLES20.glDrawArrays(GLES20.GL_POINTS, 0, 1);//6-dibujar - dibuja un punto, vertices punto=1, vertices linea=2
+        GLES20.glDisableVertexAttribArray(positionHnadle);//7-finaliza desactivando el arreglo - limpieza
+
     }
 
 
+    ///cargar los shaders - vertex y fragment - se envia como cadena de texto
+    /// //siempre cargar los shaders
+    private int loadShader(int type, String shaderCode){
+        int shader = GLES20.glCreateShader(type); // carga el vertex y el fragment - crea un shader vacio vy luego lo implementa
+        GLES20.glShaderSource(shader, shaderCode);//carga el codigo en este
+        GLES20.glCompileShader(shader);//compilar el shader
+        return shader;//retornar el id del shader
+    }
+
+
+    private final String vertexShaderCode = "attribute vec4 vPosition;" +
+            "void main(){" +
+            "gl_Position = vPosition;" +
+            "gl_PointSize = 100.0;" +
+            "}";//posiciones - punto es vector de 4 componentes : cada vertices tiene 4 componentes
+    private final String fragmentShaderCode = "precision mediump float;" +
+            "uniform vec4 vColor;" +
+            "void main(){" +
+            "gl_FragColor = vColor;" +
+            "}";//precision datos del shader, es necesario para que no salga el grafico diferente
+
+
+
 }
+
 
