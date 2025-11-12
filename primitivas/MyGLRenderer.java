@@ -8,6 +8,9 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
+     //instancia clase punto
+    private Point point;
+
 
     
     @Override
@@ -16,6 +19,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);//ver el color de forma constante
 
+        //llamar metodo draw
+        point.draw();
 
     }
 
@@ -52,8 +57,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glClearColor(0.7f, 0.85f, 1.0f, 1.0f);//celeste
 
 
+         //instanciar el objeto
+        point = new Point();
 
     }
     //controlar el como se muestran las cosas, color
 }
+
 
