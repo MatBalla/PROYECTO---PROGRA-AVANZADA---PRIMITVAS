@@ -7,9 +7,12 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
+
+
+    
     @Override
     public void onDrawFrame(GL10 gl) {
-        //limpiar y dibujar la pantalla, dibuja a 60 framesporsegundo
+        //limpiar y dibujar la pantalla, dibuja a 60 framesporsegundo - Limpiar y dbujar la pantalla
 
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);//ver el color de forma constante
 
@@ -20,7 +23,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        // cambiar orientacion del dispositivo movil, tamanio de la pantalla
+        // cambiar orientacion del dispositivo movil, tamanio de la pantalla -Cambia la orentación del dispositivo movil, establecer el tamaño de la pantalla    
 
         //tamanio pantalla
         GLES20.glViewport(0,0,width, height);//toda la pantalla
@@ -34,6 +37,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+    //Utilizado para inicializar la aplicación
+        
 
         //color de fondo RGBA
         //GLES20.glClearColor(1.0f, 0.0f, 0.0f, 1.0f); rojo
@@ -51,3 +56,4 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
     //controlar el como se muestran las cosas, color
 }
+
