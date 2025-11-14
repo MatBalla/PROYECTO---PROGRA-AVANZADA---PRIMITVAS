@@ -1,4 +1,4 @@
-package com.prograavanzada.primitivas;
+package com.prograavanzada.practicaeri;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -8,60 +8,36 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
-     //instancia clase punto
     private Point point;
+    private Point2 point2;
+    private Point3 point3;
+    private Line line; //instancia clase linea
+    private Line2 line2;
 
-
-    
     @Override
     public void onDrawFrame(GL10 gl) {
-        //limpiar y dibujar la pantalla, dibuja a 60 framesporsegundo - Limpiar y dbujar la pantalla
-
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);//ver el color de forma constante
-
-        //llamar metodo draw
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         point.draw();
 
+        line.draw();
+        point2.draw();
+        point3.draw();
+        line2.draw();
     }
-
-
 
     @Override
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
-        // cambiar orientacion del dispositivo movil, tamanio de la pantalla -Cambia la orentación del dispositivo movil, establecer el tamaño de la pantalla    
-
-        //tamanio pantalla
-        GLES20.glViewport(0,0,width, height);//toda la pantalla
-
-
-
+    public void onSurfaceChanged(GL10 gl10, int width, int height) {
+        GLES20.glViewport(0,0,width,height);
     }
-
-
-
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-    //Utilizado para inicializar la aplicación
-        
-
-        //color de fondo RGBA
-        //GLES20.glClearColor(1.0f, 0.0f, 0.0f, 1.0f); rojo
-
-        // GLES20.glClearColor(0.0f, 1.0f, 0.0f, 1.0f); verde
-        //GLES20.glClearColor(0.0f, 0.0f, 1.0f, 1.0f); //azul
-
-        //COLORES, PEDIR A GEMINI QUE CAMBIE
-        //GLES20.glClearColor(0.65f, 0.65f, 0.65f, 1.0f);//gris
-
-        GLES20.glClearColor(0.7f, 0.85f, 1.0f, 1.0f);//celeste
-
-
-         //instanciar el objeto
+        GLES20.glClearColor(0.1961f, 0.2941f, 0.4667f, 1.0f) ;
         point = new Point();
 
+        line = new Line();
+        point2 = new Point2();
+        point3 = new Point3();
+        line2 = new Line2();
     }
-    //controlar el como se muestran las cosas, color
 }
-
-
