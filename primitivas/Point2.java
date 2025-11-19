@@ -25,7 +25,7 @@ public class Point2 {
     //las coordenadas de los vértices siempre serán arreglos
     //el arreglo de coordenadas depende del número de vértices
     //coordenadas de cada uno de los vértices
-    static float pointCoord[] = {0.5f, 0.75f, 0.0f};
+    static float pointCoord[] = {0.5f, 0.5f, 0.0f};
 
     ///
     //contar el número de vértices
@@ -34,7 +34,7 @@ public class Point2 {
     //(cada coordenada de flotantes representa 4 bytes de memoria)
     private final int vertexStride = COORDS_POR_VERTEX*4;
     //color a la figura
-    float[] color = {1.0f, 1.0f, 1.0f, 1.0f};
+    float[] color = {1.0f, 1.0f, 0.0f, 1.0f};
 
     //CONSTRUCTOR: crea el buffer para enviar las coordenadas a la gpu
     //compila los shader

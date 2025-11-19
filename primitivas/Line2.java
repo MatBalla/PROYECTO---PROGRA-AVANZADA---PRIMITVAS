@@ -16,11 +16,11 @@ public class Line2 {
 
     private final float[] lineCoord = {
             //coordenadas de los vertices, necesita dos puntos, entre -1,1
-            -0.5f, -0.3f, -0.5f, -0.6f
+            -0.25f, -0.25f, -0.75f, -0.75f
 
     };//arreglo de coordenadas de los vertices
 
-    float[] color = {1.0f, 1.0f, 1.0f, 1.0f};
+    float[] color = {1.0f, 0.0f, 1.0f, 1.0f};
 
     public Line2(){
         //copia todo de clase Point
