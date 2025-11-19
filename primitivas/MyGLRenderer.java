@@ -14,6 +14,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Line line; //instancia clase linea
     private Line2 line2;
 
+    //lineas referencia plano x y y
+    private LineaReferencia lineaRefrencia;
+    private LineaReferenciaY lineaReferenciaY;
+
     @Override
     public void onDrawFrame(GL10 gl) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
@@ -23,6 +27,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         point2.draw();
         point3.draw();
         line2.draw();
+
+        //lineas referencia plano x y y
+        lineaRefrencia.draw();
+        lineaReferenciaY.draw();
     }
 
     @Override
@@ -39,5 +47,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         point2 = new Point2();
         point3 = new Point3();
         line2 = new Line2();
+
+        //lineas referencia plano x y y
+        lineaRefrencia = new LineaReferencia();
+        lineaReferenciaY = new LineaReferenciaY();
     }
 }
