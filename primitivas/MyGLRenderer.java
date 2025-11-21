@@ -20,9 +20,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private LineaReferencia lineaRefrencia;
     private LineaReferenciaY lineaReferenciaY;
 
-
     //triangulo
     private Triangle triangulo;
+
+    //cuadrado
+    private Square cuadrado;
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -31,16 +33,20 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         //carita feliz con baston
         //point.draw();
         //line.draw();
-        point2.draw();
+        //point2.draw();
         //point3.draw();
-        line2.draw();
+        //line2.draw();
 
         //lineas referencia plano x y y - comentar para ejcutar linea normales
         lineaRefrencia.draw();
         lineaReferenciaY.draw();
 
         //trangulo
-        triangulo.draw();
+        //triangulo.draw();
+
+
+        //cuadrado
+        cuadrado.draw();
     }
 
     @Override
@@ -66,6 +72,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         //triangulo
         triangulo = new Triangle();
+
+        //cuadrado
+        cuadrado = new Square();
     }
 
 
