@@ -26,6 +26,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     //cuadrado
     private Square cuadrado;
 
+    //circulo
+    private Circle circulo;
+
+    //cilindro
+
     @Override
     public void onDrawFrame(GL10 gl) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
@@ -46,7 +51,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
 
         //cuadrado
-        cuadrado.draw();
+        //cuadrado.draw();
+
+
+        //circulo
+        //circulo.draw();
+
+
     }
 
     @Override
@@ -59,11 +70,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glClearColor(0.1961f, 0.2941f, 0.4667f, 1.0f) ;
 
         //puntos y lineas
-        point = new Point();
-        line = new Line();
-        point2 = new Point2();
-        point3 = new Point3();
-        line2 = new Line2();
+        //point = new Point();
+        //line = new Line();
+        //point2 = new Point2();
+       // point3 = new Point3();
+        //line2 = new Line2();
 
 
         //lineas referencia plano x y y
@@ -71,10 +82,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         lineaReferenciaY = new LineaReferenciaY();
 
         //triangulo
-        triangulo = new Triangle();
+        //triangulo = new Triangle();
 
         //cuadrado
-        cuadrado = new Square();
+        //cuadrado = new Square();
+
+        //circulo
+        circulo = new Circle(0.5f, 50);//radio, numero de puntos
+
+
+
     }
 
 
