@@ -1,0 +1,87 @@
+package com.prograavanzada.transformaciones;
+
+import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
+import android.opengl.Matrix;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
+public class MyGLRenderer implements GLSurfaceView.Renderer {
+    private Piramide piramide;
+    private Cubo cubo;
+    private Esfera esfera;
+
+    private final float[] mProjectionMatrix = new float[16];
+    private final float[] mViewMatrix = new float[16];
+    private final float[] mModelMatrix = new float[16];
+
+    // Variables de animación
+    private float scale = 1f, scaleStep = 0.01f;
+    private float angle = 0f;
+    private int pauseCounter = 0;
+    private boolean rotateX = true;
+    private float posX = -2f, moveStep = 0.05f;
+
+    @Override
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        GLES20.glClearColor(0f, 0f, 0f, 1f);
+        piramide = new Piramide();
+        cubo = new Cubo();
+        esfera = new Esfera();
+    }
+
+    @Override
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        GLES20.glViewport(0, 0, width, height);
+        float ratio = (float) width / height;
+        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 2f, 10f);
+    }
+
+    @Override
+    public void onDrawFrame(GL10 gl) {
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+
+        // Cámara
+        Matrix.setLookAtM(mViewMatrix, 0,
+                0f, 2f, -8f,
+                0f, 0f, 0f,
+                0f, 1f, 0f);
+
+        // -------- Escalar --------
+        Matrix.setIdentityM(mModelMatrix, 0);
+        scale += scaleStep;
+        if (scale > 2f || scale < 0.5f) scaleStep = -scaleStep;
+        Matrix.scaleM(mModelMatrix, 0, scale, scale, scale);
+        drawObject(piramide);
+
+        // -------- Rotar con pausa --------
+        Matrix.setIdentityM(mModelMatrix, 0);
+        if (pauseCounter < 100) pauseCounter++;
+        else {
+            angle += 2f;
+            if (angle >= 360f) {
+                angle = 0f;
+                rotateX = !rotateX;
+                pauseCounter = 0;
+            }
+        }
+        Matrix.rotateM(mModelMatrix, 0, angle, rotateX ? 1f : 0f, rotateX ? 0f : 1f, 0f);
+        drawObject(cubo);
+
+        // -------- Trasladar --------
+        Matrix.setIdentityM(mModelMatrix, 0);
+        posX += moveStep;
+        if (posX > 3f || posX < -3f) moveStep = -moveStep;
+        Matrix.translateM(mModelMatrix, 0, posX, 0f, 0f);
+        drawObject(esfera);
+    }
+
+    private void drawObject(Figura3D objeto) {
+        float[] mvMatrix = new float[16];
+        float[] mvpMatrix = new float[16];
+        Matrix.multiplyMM(mvMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
+        Matrix.multiplyMM(mvpMatrix, 0, mProjectionMatrix, 0, mvMatrix, 0);
+        objeto.draw(mvpMatrix);
+    }
+}
